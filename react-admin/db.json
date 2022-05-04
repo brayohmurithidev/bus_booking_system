@@ -1,0 +1,46 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "Post one",
+      "body": "This is post one body",
+      "publishedAt": "10-01-2020"
+    },
+    {
+      "id": 2,
+      "title": "Post Two",
+      "body": "This is post one body",
+      "publishedAt": "10-01-2020"
+    },
+    {
+      "id": 3,
+      "title": "Post Three",
+      "body": "This is post one body",
+      "publishedAt": "10-01-2020"
+    },
+    {
+      "title": "Post Four",
+      "body": "This is my Post four",
+      "publishedAt": "2022-05-06",
+      "id": 4
+    },
+    {
+      "title": "Post Five",
+      "body": "This is post five",
+      "publishedAt": "2022-05-05",
+      "id": 5
+    },
+    {
+      "title": "",
+      "body": "",
+      "id": 6
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Brian Murithi",
+      "email": "bm.mutwiri@gmail.com"
+    }
+  ]
+}
