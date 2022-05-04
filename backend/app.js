@@ -6,6 +6,7 @@ const cors = require("cors");
 require("./dbConfig/config");
 const busesRoute = require("./api/routes/buses");
 const bookingsRoute = require("./api/routes/bookings");
+const schedulesRoute = require("./api/routes/busSchedules");
 
 // Midlewares
 app.use(morgan("dev"));
@@ -20,6 +21,7 @@ app.use(cors());
 // ROUTES GOES HERE
 app.use("/buses", busesRoute);
 app.use("/bookings", bookingsRoute);
+app.use("/schedules", schedulesRoute);
 
 // Handle errors that don't succeed all the above middlewares
 

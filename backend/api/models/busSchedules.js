@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("../models/buses");
 
 const busScheduleSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
@@ -11,7 +12,7 @@ const busScheduleSchema = mongoose.Schema({
   price: { type: "number", required: true },
   available_slots: { type: "number", default: 13 },
   departure_time: { type: "string", required: true },
-  departure_date: { type: Date, default: Date.now },
+  departure_date: { type: "string", default: new Date().toLocaleDateString() },
 });
 
-module.exports = mongoose.model("BusSchedule", busScheduleSchema);
+module.exports = mongoose.model("BusSchedules", busScheduleSchema);
