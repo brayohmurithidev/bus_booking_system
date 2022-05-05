@@ -6,6 +6,8 @@ router.get("/", scheduleController.get_all_schedules);
 
 router.post("/", scheduleController.add_new_schedule);
 
+router.get("/:id", scheduleController.get_single_schedule);
+
 router.patch("/:id", scheduleController.update_schedule);
 
 router.delete("/:id", scheduleController.delete_schedule);

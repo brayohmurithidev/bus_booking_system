@@ -6,7 +6,7 @@ exports.get_all_buses = async (req, res, next) => {
   try {
     const results = await Buses.find()
       .select("_id bus_no driver_name driver_no")
-      .populate("sacco", "sacco_name manager");
+      .populate("sacco", "_id sacco_name");
 
     if (results.length < 1) {
       res.status(404).json({
@@ -19,20 +19,32 @@ exports.get_all_buses = async (req, res, next) => {
         const plates = numberPlate.toUpperCase();
         console.log(plates);
         return {
-          id: result._id,
+          id: result.id,
           busNo: plates,
           sacco: result.sacco.sacco_name,
           driver: result.driver_name,
+          phone: result.driver_no,
         };
       });
-      res.status(200).json({
-        myresult: myresult,
-      });
+      res.status(200).json(myresult);
     }
   } catch (error) {
     res.status(500).json({
       error: error.message,
     });
+  }
+};
+
+// GET SINGLE BUS
+exports.get_single_bus = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const result = await Buses.find({
+      id: id,
+    });
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 

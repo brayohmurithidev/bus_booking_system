@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("../models/saccos");
 
 const busSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,

@@ -6,11 +6,7 @@ const busesController = require("../controllers/buses");
 router.get("/", busesController.get_all_buses);
 
 // Get Single Route
-router.get("/:id", async (req, res, next) => {
-  res.status(200).json({
-    message: "We getting one bus",
-  });
-});
+router.get("/:id", busesController.get_single_bus);
 
 // The Post Route
 router.post("/", busesController.add_new_bus);

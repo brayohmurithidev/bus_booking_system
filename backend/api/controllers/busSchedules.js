@@ -7,17 +7,34 @@ exports.get_all_schedules = async (req, res, next) => {
     const queryPopulate = [{ path: "bus", select: "bus_no sacco" }];
 
     const results = await BusSchedules.find()
-      .select("_id from to price available_slots departure_time")
+      .select(
+        "_id from to price available_slots departure_time departure_date bus"
+      )
       .populate(queryPopulate);
+    console.log(results);
 
     if (results.length < 1) {
       res.status(404).json({
         message: "No results found",
       });
     } else {
-      res.status(200).json({
-        myresult: results,
+      const result = results.map((result) => {
+        const numberPlates = result.bus.bus_no.split("-");
+        const numberPlate = numberPlates[0] + " " + numberPlates[1];
+        const plates = numberPlate.toUpperCase();
+        console.log(result);
+        return {
+          id: result._id,
+          busNo: plates,
+          from: result.from,
+          to: result.to,
+          price: result.price,
+          available_slots: result.available_slots,
+          departure_date: result.departure_date,
+          departure_time: result.departure_time,
+        };
       });
+      res.status(200).json(result);
     }
   } catch (error) {
     res.status(500).json({
@@ -32,7 +49,7 @@ exports.add_new_schedule = async (req, res, next) => {
   try {
     // Check if exists
     const result = await BusSchedules.find({
-      $or: [
+      $and: [
         { bus: req.body.bus },
         { departure_date: req.body.departure_date },
         { departure_time: req.body.departure_time },
@@ -41,7 +58,7 @@ exports.add_new_schedule = async (req, res, next) => {
     console.log(result);
     if (result.length >= 1) {
       res.status(400).json({
-        message: "Opps the seat already picked",
+        message: "Ops",
       });
     } else {
       const schedule = new BusSchedules({
@@ -56,7 +73,7 @@ exports.add_new_schedule = async (req, res, next) => {
       });
       const results = await schedule.save();
       res.status(200).json({
-        message: "Bus created successfully",
+        message: "Schedule created successfully",
         results: results,
       });
     }
@@ -67,7 +84,34 @@ exports.add_new_schedule = async (req, res, next) => {
   }
 };
 
-// GET SINGLE BUS
+// GET SINGLE Schedule
+exports.get_single_schedule = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const results = await BusSchedules.find({
+      _id: id,
+    });
+    const result = results.map((result) => {
+      // const numberPlates = result.bus.bus_no.split("-");
+      // const numberPlate = numberPlates[0] + " " + numberPlates[1];
+      // const plates = numberPlate.toUpperCase();
+      console.log(result);
+      return {
+        id: result._id,
+        busNo: result.bus.bus_no,
+        from: result.from,
+        to: result.to,
+        price: result.price,
+        available_slots: result.available_slots,
+        departure_date: result.departure_date,
+        departure_time: result.departure_time,
+      };
+    });
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 // UPDATE BUS DETAILS
 exports.update_schedule = async (req, res, next) => {
