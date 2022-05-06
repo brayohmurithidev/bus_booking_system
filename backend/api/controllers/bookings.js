@@ -12,15 +12,27 @@ exports.get_all_bookings = async (req, res, next) => {
     const results = await Bookings.find()
       .select("pickup_address drop_address seat_no amount ticket status")
       .populate(queryPopulate);
-
+    console.log(results);
     if (results.length < 1) {
       res.status(404).json({
         message: "No results found",
       });
     } else {
-      res.status(200).json({
-        myresult: results,
+      const result = results.map((result) => {
+        return {
+          id: result._id,
+          customer: result.customer,
+          schedule: result.schedule,
+          pickup_address: result.pickup_address,
+          drop_address: result.drop_address,
+          seat_no: result.seat_no,
+          amount: result.amount,
+          mode_of_payment: result.mode_of_payment,
+          ticket: result.ticket,
+          status: result.status,
+        };
       });
+      res.status(200).json(result);
     }
   } catch (error) {
     res.status(500).json({

@@ -7,12 +7,15 @@ import {
   ScheduleEdit,
   ScheduleCreate,
 } from "./components/Schedule/Schedule";
+import { SaccoList } from "./components/Sacco/Sacco";
+import { BookingList } from "./components/Booking/Booking";
 
 const dataProvider = restProvider("http://localhost:5454");
 function App() {
   return (
-    <Admin dataProvider={dataProvider}>
+    <Admin container dataProvider={dataProvider}>
       {/* Resource components takes props name thats the name of the collection, and list that we have to create */}
+      <Resource name="saccos" list={SaccoList} />
       <Resource name="buses" list={BusList} create={BusCreate} edit={BusEdit} />
       <Resource
         name="schedules"
@@ -20,6 +23,7 @@ function App() {
         create={BusCreate}
         edit={ScheduleEdit}
       />
+      <Resource name="bookings" list={BookingList} edit={EditGuesser} />
     </Admin>
   );
 }

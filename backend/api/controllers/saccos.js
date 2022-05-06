@@ -7,15 +7,23 @@ exports.get_all_saccos = async (req, res, next) => {
     const results = await Saccos.find().select(
       "_id sacco_name manager email phone_no reg_date"
     );
-
+    console.log(results);
     if (results.length < 1) {
       res.status(404).json({
         message: "No results found",
       });
     } else {
-      res.status(200).json({
-        myresult: results,
+      const result = results.map((result) => {
+        return {
+          id: result._id,
+          sacco_name: result.sacco_name,
+          manager: result.manager,
+          email: result.email,
+          phone_no: result.phone_no,
+          reg_date: result.reg_date,
+        };
       });
+      res.status(200).json(result);
     }
   } catch (error) {
     res.status(500).json({

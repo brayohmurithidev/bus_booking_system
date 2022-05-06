@@ -1,15 +1,16 @@
 const mongoose = require("mongoose");
-require("../models/customers");
 
 const bookingSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   customer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Customers",
+    required: true,
   },
   schedule: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "BusSchedule",
+    ref: "BusSchedules",
+    required: true,
   },
   pickup_address: { type: "string", required: true },
   drop_address: { type: "string", required: true },
