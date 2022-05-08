@@ -1,0 +1,18 @@
+.available {
+  background-color: rgba(0, 0, 255, 0.624);
+}
+.unavailable {
+  background-color: rgba(128, 128, 128, 0.671);
+}
+.seat {
+  width: 80px;
+  /* height: 20px; */
+  border: 1px solid black;
+  color: #fff;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.seat div {
+  /* margin: 0px; */
+}
