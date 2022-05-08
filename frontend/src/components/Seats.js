@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import React, { useState } from "react";
 import "./seats.css";
 
@@ -6,14 +6,13 @@ const Seats = () => {
   const [classes, setClasses] = useState("");
   const [selectedSeat, setSelectedSeat] = useState([]);
 
-  const handleSeatClick = (selectedId) => {
-    setClasses("unavailable");
-  };
-
   var seats = [
     { id: "1", value: "1", column: "1", seatNo: "1", status: "available" },
     { id: "2", column: "2", seatNo: "2", status: "unavailable" },
     { id: "3", column: "3", seatNo: "3", status: "available" },
+    { id: "4", column: "1", seatNo: "4", status: "available" },
+    { id: "5", column: "2", seatNo: "5", status: "available" },
+    { id: "6", column: "3", seatNo: "6", status: "unavailable" },
     { id: "4", column: "1", seatNo: "4", status: "available" },
     { id: "5", column: "2", seatNo: "5", status: "available" },
     { id: "6", column: "3", seatNo: "6", status: "unavailable" },
@@ -25,15 +24,21 @@ const Seats = () => {
   const seatMap = seats.map((seat) => {
     var selectedId = seat.id;
     return (
-      <div
-        onClick={handleSeatClick}
+      <Grid
+        item
+        sx={{}}
+        md="4"
+        onClick={(e) => {
+          setClasses("unavailable");
+          setSelectedSeat(seat.id);
+        }}
         className={`seat  ${
           seat.status === "available" ? "available" : "unavailable"
         }`}
         key={seat.id}
       >
-        <div>{seat.seatNo}</div>
-      </div>
+        <Grid>{seat.seatNo}</Grid>
+      </Grid>
     );
   });
 
@@ -47,6 +52,7 @@ const Seats = () => {
         padding: "10px",
         color: "#333",
         display: "flex",
+        width: "300px",
       }}
     >
       <div id="jquery-script-menu">
@@ -58,7 +64,9 @@ const Seats = () => {
         <div className="container">
           <h1>Select Your prefered seat</h1>
           <div id="seat-map">
-            <div className="front-indicator">{seatMap}</div>
+            <div className="front-indicator">
+              <Grid container>{seatMap}</Grid>
+            </div>
           </div>
           <div className="booking-details">
             <h2>Booking Details</h2>
