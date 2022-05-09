@@ -1,110 +1,146 @@
-var firstSeatLabel = 1;
+import React, { useEffect, useState } from "react";
+import "./seat.css";
+import Container from "@mui/material/Container";
+import { Grid } from "@mui/material";
 
-$(document).ready(function () {
-  var $cart = $("#selected-seats"),
-    $counter = $("#counter"),
-    $total = $("#total"),
-    sc = $("#seat-map").seatCharts({
-      map: [
-        "ff_ff",
-        "ff_ff",
-        "ee_ee",
-        "ee_ee",
-        "ee___",
-        "ee_ee",
-        "ee_ee",
-        "ee_ee",
-        "eeeee",
-      ],
-      seats: {
-        f: {
-          price: 100,
-          classes: "first-class", //your custom CSS class
-          category: "First Class",
-        },
-        e: {
-          price: 40,
-          classes: "economy-class", //your custom CSS class
-          category: "Economy Class",
-        },
-      },
-      naming: {
-        top: false,
-        getLabel: function (character, row, column) {
-          return firstSeatLabel++;
-        },
-      },
-      legend: {
-        node: $("#legend"),
-        items: [
-          ["f", "available", "First Class"],
-          ["e", "available", "Economy Class"],
-          ["f", "unavailable", "Already Booked"],
-        ],
-      },
-      click: function () {
-        if (this.status() == "available") {
-          //let's create a new <li> which we'll add to the cart items
-          $(
-            "<li>" +
-              this.data().category +
-              " Seat # " +
-              this.settings.label +
-              ": <b>$" +
-              this.data().price +
-              '</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>'
-          )
-            .attr("id", "cart-item-" + this.settings.id)
-            .data("seatId", this.settings.id)
-            .appendTo($cart);
+const Seat = () => {
+  const [selected, setSelected] = useState([]);
 
-          /*
-           * Lets update the counter and total
-           *
-           * .find function will not find the current seat, because it will change its stauts only after return
-           * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
-           */
-          $counter.text(sc.find("selected").length + 1);
-          $total.text(recalculateTotal(sc) + this.data().price);
-
-          return "selected";
-        } else if (this.status() == "selected") {
-          //update the counter
-          $counter.text(sc.find("selected").length - 1);
-          //and total
-          $total.text(recalculateTotal(sc) - this.data().price);
-
-          //remove the item from our cart
-          $("#cart-item-" + this.settings.id).remove();
-
-          //seat has been vacated
-          return "available";
-        } else if (this.status() == "unavailable") {
-          //seat has been already booked
-          return "unavailable";
-        } else {
-          return this.style();
+  const handleClicked = (e) => {
+    if (e.target.checked === true) {
+      setSelected((oldsetSelected) => [...oldsetSelected, e.target.id]);
+    } else {
+      for (var i = 0; i < selected.length; i++) {
+        if (selected[i] === e.target.id) {
+          selected.splice(i, 1);
+          i--;
+          setSelected([...selected]);
         }
-      },
-    });
+      }
+    }
+  };
+  console.log(selected);
+  return (
+    <Container>
+      <Grid container>
+        <Grid item md="6">
+          <div className="vehicle">
+            <div className="heading">
+              <h1>Please select a seat</h1>
+            </div>
 
-  //this will handle "[cancel]" link clicks
-  $("#selected-seats").on("click", ".cancel-cart-item", function () {
-    //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
-    sc.get($(this).parents("li:first").data("seatId")).click();
-  });
+            {/* <div className="exit exit--front fuselage"></div> */}
+            <ol className="cabin fuselage">
+              <li className="row row--1">
+                <ol className="seats" type="A">
+                  <li className="seat">
+                    <input type="checkbox" id="2" onClick={handleClicked} />
+                    <label for="2">2</label>
+                  </li>
 
-  //let's pretend some seats have already been booked
-  sc.get(["1_2", "4_1", "7_1", "7_2"]).status("unavailable");
-});
+                  <li className="seat">
+                    <input type="checkbox" id="1" onClick={handleClicked} />
+                    <label for="1">1</label>
+                  </li>
+                  <li className="seat">
+                    <input type="checkbox" disabled id="1D" />
+                    <label for="1D">Driver</label>
+                  </li>
+                </ol>
+              </li>
+              <div>
+                <hr className="divider"></hr>
+              </div>
+              <li className="row row--2">
+                <ol className="seats" type="A">
+                  <li className="seat">
+                    <input type="checkbox" id="3" onClick={handleClicked} />
+                    <label for="3">3</label>
+                  </li>
 
-function recalculateTotal(sc) {
-  var total = 0;
+                  <li className="seat">
+                    <input type="checkbox" id="4" onClick={handleClicked} />
+                    <label for="4">4</label>
+                  </li>
+                  <li className="seat">
+                    <input type="checkbox" id="5" onClick={handleClicked} />
+                    <label for="5">5</label>
+                  </li>
+                </ol>
+              </li>
+              <li className="row row--3">
+                <ol className="seats" type="A">
+                  <li className="seat">
+                    <input type="checkbox" id="6" onClick={handleClicked} />
+                    <label for="6">6</label>
+                  </li>
 
-  //basically find every selected seat and sum its price
-  sc.find("selected").each(function () {
-    total += this.data().price;
-  });
+                  <li className="seat">
+                    <input type="checkbox" id="7" onClick={handleClicked} />
+                    <label for="7">7</label>
+                  </li>
+                  <li className="seat">
+                    <input type="checkbox" id="8" onClick={handleClicked} />
+                    <label for="8">8</label>
+                  </li>
+                </ol>
+              </li>
+              <li className="row row--4">
+                <ol className="seats" type="A">
+                  <li className="seat">
+                    <input type="checkbox" id="9" onClick={handleClicked} />
+                    <label for="9">9</label>
+                  </li>
 
-  return total;
-}
+                  <li className="seat">
+                    <input type="checkbox" id="10" onClick={handleClicked} />
+                    <label for="10">10</label>
+                  </li>
+                  <li className="seat">
+                    <input type="checkbox" id="11" onClick={handleClicked} />
+                    <label for="11">11</label>
+                  </li>
+                </ol>
+              </li>
+              <li className="row row--5">
+                <ol className="seats" type="A">
+                  <li className="seat">
+                    <input type="checkbox" id="12" onClick={handleClicked} />
+                    <label for="12">12</label>
+                  </li>
+
+                  <li className="seat">
+                    <input type="checkbox" id="13" onClick={handleClicked} />
+                    <label for="13">13</label>
+                  </li>
+                  <li className="seat">
+                    <input type="checkbox" id="14" onClick={handleClicked} />
+                    <label for="14">14</label>
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </div>
+        </Grid>
+        <Grid item md="6">
+          <div className="booking-details">
+            <h2>Booking Details</h2>
+            <h3>
+              {" "}
+              Selected Seats (<span id="counter">{selected.length}</span>):
+            </h3>
+            <ul id="selected-seats">{`${selected}`}</ul>
+            Total:{""}
+            <b>
+              Ksh.<span id="total">{selected.length * 500}</span>
+            </b>
+            <button className="checkout-button">Checkout &raquo;</button>
+            <div id="legend"></div>
+          </div>
+        </Grid>
+      </Grid>
+    </Container>
+  );
+};
+
+export default Seat;

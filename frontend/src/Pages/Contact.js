@@ -1,10 +1,12 @@
 import React from "react";
-import Seats from "../components/Seats";
+import Seat from "../components/Seat";
+// import Seats from "../components/Seats";
 
 const Contact = () => {
   return (
     <div>
-      <Seats />
+      {/* <Seats /> */}
+      <Seat />
     </div>
   );
 };

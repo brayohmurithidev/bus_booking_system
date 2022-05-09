@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
+import BookingModal from "./BookingModal";
 import ModalDialog from "./ModalDialog";
 import Navbar from "./Navbar";
 
