@@ -20,6 +20,12 @@ app.use(
 app.use(bodyParser.json());
 app.use(cors());
 
+// Lipa na mpesa middleware
+// app.use(async getOAuthToken(req, res, next){
+//   let consumer_key = "PzO9oFyg2L3pZAQMhbEH5eCkivmnS32G";
+//   let
+// })
+
 // HEADERS SPECIFY
 app.use((req, res, next) => {
   res.header("Content-Range", "buses 0-20/30");
