@@ -18,7 +18,7 @@ import {
 
 import React from "react";
 
-const ScheduleCard = () => {
+const ScheduleCard = ({ handleOpen }) => {
   return (
     <Card
       sx={{
@@ -104,6 +104,7 @@ const ScheduleCard = () => {
               </Table>
             </TableContainer>
             <Button
+              onClick={handleOpen}
               variant="contained"
               sx={{
                 marginTop: "16px",

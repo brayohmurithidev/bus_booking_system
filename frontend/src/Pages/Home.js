@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   FormControl,
@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import SeachIcon from "@mui/icons-material/Search";
 import FeaturedCard from "../components/FeaturedCard";
+import BookingModal from "../components/BookingModal";
 
 const StyledSelect = styled(Select)(`
 &.${outlinedInputClasses.notchedOutline}{
@@ -27,8 +28,22 @@ const StyledSelect = styled(Select)(`
 `);
 
 const Home = () => {
+  // Declare a state variable for modal open
+  const [open, setOpen] = useState(false);
+
+  // function to handle modal open
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  // function to handle modal open
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <div>
+      <div>
+        <BookingModal open={open} handleClose={handleClose} />
+      </div>
       <div className="section-intro">
         <div className="section-content">
           <Typography variant="h4">
@@ -38,6 +53,7 @@ const Home = () => {
             </Typography>
           </Typography>
         </div>
+
         <Box
           sx={{
             backgroundColor: "white",
@@ -127,13 +143,13 @@ const Home = () => {
         <Typography variant="h5">~ FEATURED SCHEDULES ~</Typography>
         <Grid container>
           <Grid item md="4">
-            <FeaturedCard />
+            <FeaturedCard handleOpen={handleOpen} />
           </Grid>
           <Grid item md="4">
-            <FeaturedCard />
+            <FeaturedCard handleOpen={handleOpen} />
           </Grid>
           <Grid item md="4">
-            <FeaturedCard />
+            <FeaturedCard handleOpen={handleOpen} />
           </Grid>
         </Grid>
       </div>

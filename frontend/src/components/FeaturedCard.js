@@ -5,10 +5,10 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, TableCell, TableRow } from "@mui/material";
 
-export default function ActionAreaCard() {
+export default function ActionAreaCard({ handleOpen }) {
   return (
     <Card sx={{ maxWidth: 420, backgroundColor: "#efefef", color: "#333" }}>
-      <CardActionArea>
+      <CardActionArea onClick={handleOpen}>
         <CardMedia
           component="img"
           height="140"
