@@ -1,5 +1,11 @@
 import React from "react";
-import { Admin, EditGuesser, Resource, AppBar } from "react-admin";
+import {
+  Admin,
+  DashboardMenuItem,
+  EditGuesser,
+  ListGuesser,
+  Resource,
+} from "react-admin";
 import restProvider from "ra-data-simple-rest";
 import { BusList, BusCreate, BusEdit } from "./components/Bus/Bus";
 import {
@@ -23,14 +29,16 @@ function App() {
   return (
     <Admin layout={MyLayout} container dataProvider={dataProvider}>
       {/* Resource components takes props name thats the name of the collection, and list that we have to create */}
+      {/* <DashboardMenuItem></DashboardMenuItem> */}
       <Resource name="saccos" list={SaccoList} />
-      <Resource name="buses" list={BusList} create={BusCreate} edit={BusEdit} />
+      <Resource name="buses" create={BusCreate} edit={BusEdit} />
       <Resource
         name="schedules"
-        list={ScheduleList}
-        create={BusCreate}
-        edit={ScheduleEdit}
+        list={ListGuesser}
+        create={ScheduleCreate}
+        edit={EditGuesser}
       />
+
       <Resource name="bookings" list={BookingList} edit={EditGuesser} />
     </Admin>
   );

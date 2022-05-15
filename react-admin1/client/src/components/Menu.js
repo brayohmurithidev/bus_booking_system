@@ -8,7 +8,7 @@ import LabelIcon from "@mui/icons-material/Label";
 
 export const Menubar = (props) => (
   <Menu {...props}>
-    <DashboardMenuItem to="/" />
+    <DashboardMenuItem to="/"  />
     <MenuItemLink to="/saccos" primaryText="Saccos" leftIcon={<BookIcon />} />
     <MenuItemLink
       to="/bookings"
